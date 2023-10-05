@@ -1,0 +1,33 @@
+<x-modal (onClose)="onClose()">
+  <p *ngIf="mode" header>{{ modeMap.get(mode)}}</p>
+
+  <form body [formGroup]="eventForm" (submit)="onSubmit()" class="flex flex-col sm:flex-row gap-4 w-full">
+    <section class="flex flex-col gap-2 w-full">
+      <x-label-input [formGroup]="eventForm" formControlName="title" label="Titulo"
+        [class]="{ '[&>input]:border-red-500': highlightErrors }"
+        class="relative after:content-['*'] after:text-red-500 after:absolute after:-top-1 after:left-10" />
+      <x-action-form-textarea [formGroup]="eventForm" formControlName="description" />
+    </section>
+
+    <section class="flex flex-col justify-end gap-4 sm:gap-2 min-w-fit sm:min-w-[200px]">
+      <x-action-form-checkbox [formGroup]="eventForm" formControlName="allDay" label="¿Todo el día?" />
+
+      <ng-container *ngIf="eventForm.get('allDay')?.value;else datetime">
+        <x-label-input [formGroup]="eventForm" formControlName="startDate" label="Fecha Inicio" type="date" />
+        <x-label-input [formGroup]="eventForm" formControlName="endDate" label="Fecha Termino" type="date" />
+      </ng-container>
+
+      <ng-template #datetime>
+        <x-label-input [formGroup]="eventForm" formControlName="startDatetime" label="Fecha Inicio"
+          type="datetime-local" />
+        <x-label-input [formGroup]="eventForm" formControlName="endDatetime" label="Fecha Termino"
+          type="datetime-local" />
+      </ng-template>
+    </section>
+  </form>
+
+  <footer footer class="flex gap-2 justify-between sm:justify-end w-full">
+    <x-button color="red" (click)="onClose()">Cerrar</x-button>
+    <x-button color="blue" type="submit" (click)="onSubmit()">Guardar</x-button>
+  </footer>
+</x-modal>

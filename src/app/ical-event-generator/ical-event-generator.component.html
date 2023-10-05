@@ -1,0 +1,25 @@
+<main class="container flex flex-col w-screen h-screen mx-auto px-4 md:px-0 py-4">
+  <header class="mb-4 md:mb-0">
+    <x-heading
+      class="text-center"
+      content="Generador de Eventos Calendario"
+      level="h1"
+    />
+    <section class="hidden md:block">
+      <x-actions class="hidden md:flex md:justify-between w-full mt-0 md:mt-4"/>
+    </section>
+  </header>
+  <article class="grow rounded-md mb-4 md:mb-0 overflow-auto outline outline-1 outline-slate-300 dark:outline-stone-700">
+    <ng-container *ngIf="show">
+      <x-table
+        class="shadow-sm"
+        (onAction)="onAction($event)"
+        [headers]="headers"
+        [rows]="eventToRender"
+      />
+    </ng-container>
+  </article>
+  <footer class="block md:hidden">
+    <x-actions />
+  </footer>
+</main>

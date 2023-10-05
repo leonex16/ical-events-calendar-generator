@@ -1,0 +1,27 @@
+<table [formGroup]="tableForm" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" class="p-4"></th>
+      <th *ngFor="let label of headers" scope="col" class="px-6 py-3">{{label}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="this.rows.length > 0" formArrayName="rows">
+    <tr *ngFor="let rowControl of getRowsForm().controls; index as i"
+      class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+      <td class="w-4 p-4">
+        <div class="flex items-center overflow-hidden rounded-sm">
+          <input [formControlName]="i" [id]="i" type="checkbox"
+            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+          <label [for]="i" class="sr-only">checkbox</label>
+        </div>
+      </td>
+      <td *ngFor="let cell of rows[i] | slice:1" scope="row"
+        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {{cell}}
+      </td>
+      <td class="relative flex justify-center w-full p-4">
+        <x-table-dropdown [id]="rows[i][0]" (onAction)="actionHandler($event)" />
+      </td>
+    </tr>
+  </tbody>
+</table>
